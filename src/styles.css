@@ -208,6 +208,10 @@ button { cursor: pointer; font-family: inherit; }
 .overlay-heading { z-index: 4; pointer-events: none; max-width: 60%; position: absolute; top: 22px; left: 26px; }
 .overlay-title { letter-spacing: 1.5px; color: var(--ink-900); text-shadow: 0 2px 14px #fffcf48c; margin: 0; font-size: 44px; line-height: 1.05; }
 .overlay-sub { font-family: var(--font-hand); color: var(--plum); letter-spacing: .5px; text-shadow: 0 2px 14px #fffcf480; margin-top: 6px; font-size: 22px; }
+.heading-progress { margin-top: 14px; width: 220px; display: flex; flex-direction: column; gap: 7px; }
+.heading-progress-bar { background: #463c5014; border-radius: 999px; height: 5px; overflow: hidden; }
+.heading-progress-fill { background: linear-gradient(90deg, var(--accent) 0%, var(--accent-deep) 100%); border-radius: 999px; height: 100%; transition: width 0.2s ease; }
+.heading-progress-text { color: var(--ink-500); font-size: 11px; letter-spacing: 0.6px; }
 .overlay-tip { z-index: 3; pointer-events: none; letter-spacing: 1.2px; color: #463c506b; -webkit-user-select: none; user-select: none; margin: 0; font-size: 11px; position: absolute; bottom: 32px; left: 26px; }
 
 .overlay-toolbar {

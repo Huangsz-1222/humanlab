@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLang, UI } from '../i18n.jsx';
 import { DISPLAY_MODES, BRAIN_VIEWS, SMALL_INTESTINE_VIEWS } from '../data/models.js';
 import Viewer from '../viewer/Viewer.jsx';
-import { RotateIcon, ResetIcon, SpinnerIcon } from './Icons.jsx';
+import { RotateIcon, ResetIcon } from './Icons.jsx';
 
 const MODE_LABELS = {
   surface: UI.modeSurface,
@@ -56,6 +56,19 @@ export default function Stage({
       <div className="overlay-heading">
         <h1 className="overlay-title">{heading.label}</h1>
         <div className="overlay-sub">{heading.sub}</div>
+        {loadStatus.status === 'loading' && (
+          <div className="heading-progress">
+            <div className="heading-progress-bar">
+              <div
+                className="heading-progress-fill"
+                style={{ width: `${Math.round(loadStatus.progress * 100)}%` }}
+              />
+            </div>
+            <span className="heading-progress-text">
+              {t(UI.loading)} · {Math.round(loadStatus.progress * 100)}%
+            </span>
+          </div>
+        )}
       </div>
 
       {!isOrgan && (
@@ -129,27 +142,6 @@ export default function Stage({
           {t(UI.resetView)}
         </button>
       </div>
-
-      {loadStatus.status === 'loading' && (
-        <div className="progress-overlay">
-          <div className="progress-card">
-            <div className="progress-spinner">
-              <SpinnerIcon />
-            </div>
-            <div className="progress-headline">{t(UI.loading)}</div>
-            <div className="progress-bar">
-              <div
-                className="progress-fill"
-                style={{ width: `${Math.round(loadStatus.progress * 100)}%` }}
-              />
-            </div>
-            <div className="progress-status">
-              <span>{t(UI.loading)}</span>
-              <span className="progress-percent">{Math.round(loadStatus.progress * 100)}%</span>
-            </div>
-          </div>
-        </div>
-      )}
 
       {loadStatus.status === 'missing' && (
         <div className="overlay-missing">
