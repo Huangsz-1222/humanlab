@@ -1,44 +1,97 @@
-# HUMANLAB 人體解剖互動學習網站
+# HUMANLAB · 人體解剖互動工坊
 
-雙語（English／繁體中文）的人體解剖 3D 互動學習網站。參考「LearningCell 細胞結構工坊」的米色手繪風 UI。
+雙語（English／繁體中文）的人體解剖 3D 互動學習網站，仿照「LearningCell 細胞結構工坊」的米色手繪風 UI。使用者可透過 3D 模型探索人體各項器官與系統。
 
-## 快速開始
+- **線上網址**：https://huangsz-1222.github.io/humanlab/
 
-```bash
-# 安裝相依套件（第一次）
-npm install
+---
 
-# 啟動開發伺服器
-npm run dev
-# 開啟終端顯示的網址（預設 http://localhost:5173）
+## 功能總覽
 
-# 產出正式版
-npm run build
-npm run preview
+- **歡迎畫面**：品牌 LOGO、標題、簡介、「開始探索」按鈕（含淡出轉場）
+- **三欄版面**：左側模型列表、中間 3D 舞台、右側教學資訊面板
+- **3D 檢視器**：拖曳旋轉、滾輪縮放、自動旋轉、復位視角
+- **主畫面人體**：表面／骨骼／骨骼＋肌肉 三種顯示型態切換
+- **熱點導航**：在人體上點擊（隱形熱點，hover 顯示名稱）跳轉到對應器官
+- **多檢視切換**：腦部（矢狀／冠狀切面）、小腸（黏膜絨毛／管壁）
+- **教學內容**：焦點、概念解讀、關鍵結構（5 項）、趣味知識、模型來源
+- **雙語切換**：English／繁體中文
+- **延遲載入**：優先載入人體，器官背景載入，點擊時快取
+
+## 收錄模型（11 個）
+
+| 分類 | 模型 |
+| --- | --- |
+| 人體 | 全身表面、骨骼系統、骨骼＋肌肉、頸部 |
+| 器官 | 心臟、肺部、胃部、腦部（矢狀／冠狀）、小腸（黏膜絨毛／管壁） |
+
+---
+
+## 技術棧
+
+- **前端**：React 18 + Vite 5
+- **3D**：Three.js + @react-three/fiber + @react-three/drei
+- **樣式**：純 CSS（自訂設計系統變數）
+- **部署**：GitHub Pages + GitHub Actions 自動部署
+
+## 目錄結構
+
+```
+humanlab/
+  index.html
+  vite.config.js
+  package.json
+  docs/
+    BLENDER_EXPORT.md       ← Blender 匯出 GLB 教學
+    DESIGN.md               ← 設計說明
+    DEVELOPMENT_LOG.md      ← 開發歷程
+  public/
+    models/                 ← 11 個 GLB 模型檔
+    draco/                  ← Draco 解碼器（預留）
+    logo.png                ← 品牌 LOGO
+  src/
+    data/models.js          ← 模型清單、熱點、檔名對照
+    data/content.js         ← 雙語教學內容
+    i18n.jsx                ← 語言切換
+    components/             ← Topbar、Sidebar、Stage、InfoPanel、SplashScreen、AboutModal
+    viewer/                 ← 3D 檢視器、模型載入器
+  .github/workflows/deploy.yml  ← 自動部署設定
+  啟動網站.bat              ← 本機預覽一鍵啟動
+  更新網站.bat              ← 更新＋部署一鍵執行
 ```
 
-## 放入你的 3D 模型
+---
 
-把 Blender 匯出的 `.glb` 檔放到 `public/models/` 資料夾，檔名對照表見下方。沒放模型時，網站會自動顯示占位模型，方便先預覽流程。
+## 本機開發
 
-| 檔名 | 用途 |
-| --- | --- |
-| `body_surface.glb` | 人體（無背部）— 主畫面 |
-| `body_skeleton.glb` | 人體骨骼 |
-| `body_skeleton_muscles.glb` | 人體骨骼＋肌肉 |
-| `heart.glb` | 心臟 |
-| `stomach.glb` | 胃部 |
-| `brain_sagittal.glb` | 腦部側面剖面（矢狀） |
-| `brain_coronal.glb` | 腦部正面剖面（冠狀） |
-| `neck.glb` | 頸部 |
-| `small_intestine.glb` | 小腸（Coming Soon） |
+```bash
+npm install      # 第一次安裝相依套件
+npm run dev      # 啟動開發伺服器（http://localhost:5173）
+npm run build    # 產出正式版（dist 資料夾）
+```
 
-> Blender 匯出步驟請看 [`docs/BLENDER_EXPORT.md`](docs/BLENDER_EXPORT.md)。
+或直接雙擊 **`啟動網站.bat`**。
 
-## 熱點標記
+## 更新網站（部署到 GitHub Pages）
 
-主畫面人體模型上要放「熱點標記」（Empty 空物件），命名為 `hotspot_heart`、`hotspot_stomach`、`hotspot_brain`、`hotspot_neck`、`hotspot_small_intestine`。詳見 [`docs/BLENDER_EXPORT.md`](docs/BLENDER_EXPORT.md)。
+修改內容後，雙擊 **`更新網站.bat`**，或手動執行：
 
-## 設計說明
+```bash
+git add -A
+git commit -m "Update website"
+git push
+```
 
-詳見 [`docs/DESIGN.md`](docs/DESIGN.md)。
+GitHub Actions 會自動建置並部署（約 1～2 分鐘）。
+
+## 模型上架流程（新增模型時）
+
+1. 在 Blender 製作模型，放在人體上的熱點命名為 `hotspot_<器官>`
+2. 減面：`Decimate` 修改器 → Ratio 0.3～0.5 → Apply
+3. 縮貼圖：Image Editor → Image → Resize → 2048
+4. 匯出 GLB：`File → Export → glTF 2.0 (.glb)`，檔名用英文小寫＋底線
+5. 放到 `public/models/`
+6. 在 `src/data/models.js` 與 `src/data/content.js` 加入對應項目
+7. 執行「更新網站」
+
+詳細匯出教學見 [`docs/BLENDER_EXPORT.md`](docs/BLENDER_EXPORT.md)。
