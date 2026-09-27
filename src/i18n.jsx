@@ -44,4 +44,6 @@ export const UI = {
   tagline: { en: 'Explore the human body', zh: '探索人體構造之美' },
   pen: { en: 'the beauty within', zh: '探索人體奧秘' },
   metaReady: { en: 'Interactive', zh: '可互動' },
+  metaLoading: { en: 'Loading', zh: '載入中' },
+  metaPending: { en: 'Pending', zh: '待載入' },
 };

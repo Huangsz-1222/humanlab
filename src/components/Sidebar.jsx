@@ -1,6 +1,8 @@
+import { useState, useEffect } from 'react';
 import { useLang, UI } from '../i18n.jsx';
-import { CATALOG, CATEGORIES } from '../data/models.js';
+import { CATALOG, CATEGORIES, resolveGlb } from '../data/models.js';
 import { getContent } from '../data/content.js';
+import { getLoadingState, subscribeLoading } from '../viewer/modelLoader.js';
 
 function itemInfo(item) {
   if (item.kind === 'body') return getContent(item.mode);
@@ -9,6 +11,9 @@ function itemInfo(item) {
 
 export default function Sidebar({ selection, isActive, onSelect }) {
   const { t } = useLang();
+  const [, forceUpdate] = useState(0);
+
+  useEffect(() => subscribeLoading(() => forceUpdate((v) => v + 1)), []);
 
   return (
     <aside className="sidebar">
@@ -22,6 +27,12 @@ export default function Sidebar({ selection, isActive, onSelect }) {
             {CATALOG.filter((i) => i.category === cat.id).map((item) => {
               const info = itemInfo(item);
               const active = isActive(item);
+              const glb = resolveGlb(item);
+              const loading = glb ? getLoadingState(glb) : null;
+              const status = loading ? loading.status : 'idle';
+              const chipClass = status === 'loaded' ? 'ok' : status === 'loading' ? 'loading' : 'idle';
+              const progress = loading ? loading.progress : 0;
+
               return (
                 <li key={item.id}>
                   <button
@@ -43,7 +54,19 @@ export default function Sidebar({ selection, isActive, onSelect }) {
                       {!item.brainView && !item.smallIntestineView && t(info.sub)}
                     </span>
                     <span className="cell-status">
-                      <span className="status-chip ok">{t(UI.metaReady)}</span>
+                      <span className={`status-chip ${chipClass}`}>
+                        {status === 'loaded' && t(UI.metaReady)}
+                        {status === 'loading' && t(UI.metaLoading)}
+                        {(status === 'idle' || status === 'missing') && t(UI.metaPending)}
+                      </span>
+                      {status === 'loading' && (
+                        <span className="mini-bar">
+                          <span
+                            className="mini-fill"
+                            style={{ width: `${Math.round(progress * 100)}%` }}
+                          />
+                        </span>
+                      )}
                     </span>
                   </button>
                 </li>

@@ -79,3 +79,11 @@ export const FALLBACK_COLORS = {
   neck: '#5b8db8',
   small_intestine: '#c98a3a',
 };
+
+// 依 catalog item 取得 GLB 路徑（可能為 undefined = 尚未匯入）
+export function resolveGlb(item) {
+  if (item.kind === 'body') return BODY_GLB[item.mode];
+  if (item.organId === 'brain') return ORGAN_GLB.brain[item.brainView];
+  if (item.organId === 'small_intestine') return ORGAN_GLB.small_intestine[item.smallIntestineView];
+  return ORGAN_GLB[item.organId];
+}

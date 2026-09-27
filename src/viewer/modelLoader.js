@@ -17,6 +17,23 @@ function createLoader() {
 
 export const modelCache = new Map();
 
+const loadingState = new Map();
+const loadingListeners = new Set();
+
+function setLoadingState(glb, state) {
+  loadingState.set(glb, state);
+  loadingListeners.forEach((fn) => fn());
+}
+
+export function getLoadingState(glb) {
+  return loadingState.get(glb) || null;
+}
+
+export function subscribeLoading(fn) {
+  loadingListeners.add(fn);
+  return () => loadingListeners.delete(fn);
+}
+
 function normalizeScene(scene) {
   scene.updateMatrixWorld(true);
   const box = new Box3().setFromObject(scene);
@@ -67,9 +84,11 @@ export function loadModel(glb, isBody, onProgress) {
     }
     if (modelCache.has(glb)) {
       const c = modelCache.get(glb);
+      setLoadingState(glb, { status: 'loaded', progress: 1 });
       resolve({ scene: c.scene, status: 'loaded', hotspotPositions: c.hotspotPositions });
       return;
     }
+    setLoadingState(glb, { status: 'loading', progress: 0 });
     const loader = createLoader();
     loader.load(
       glb,
@@ -78,14 +97,18 @@ export function loadModel(glb, isBody, onProgress) {
         const scene = normalizeScene(gltf.scene);
         const hotspotPositions = isBody ? extractHotspots(scene) : null;
         modelCache.set(glb, { scene, hotspotPositions });
+        setLoadingState(glb, { status: 'loaded', progress: 1 });
         resolve({ scene, status: 'loaded', hotspotPositions });
       },
       (xhr) => {
-        if (onProgress) {
-          onProgress(xhr.total ? xhr.loaded / xhr.total : 0);
-        }
+        const progress = xhr.total ? xhr.loaded / xhr.total : 0;
+        setLoadingState(glb, { status: 'loading', progress });
+        if (onProgress) onProgress(progress);
       },
-      () => resolve({ scene: null, status: 'missing', hotspotPositions: null })
+      () => {
+        setLoadingState(glb, { status: 'missing', progress: 1 });
+        resolve({ scene: null, status: 'missing', hotspotPositions: null });
+      }
     );
   });
 }
