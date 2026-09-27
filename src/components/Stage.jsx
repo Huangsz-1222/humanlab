@@ -24,7 +24,6 @@ export default function Stage({
   selection,
   glb,
   isBody,
-  fallbackColor,
   heading,
   onSelectHotspot,
   onDisplayMode,
@@ -45,7 +44,6 @@ export default function Stage({
         <Viewer
           glb={glb}
           isBody={isBody}
-          fallbackColor={fallbackColor}
           autoRotate={autoRotate}
           resetSignal={resetSignal}
           onSelectHotspot={onSelectHotspot}

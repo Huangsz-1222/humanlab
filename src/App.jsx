@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useLang } from './i18n.jsx';
-import { FALLBACK_COLORS, BODY_GLB, ORGAN_GLB } from './data/models.js';
+import { BODY_GLB, ORGAN_GLB } from './data/models.js';
 import { getContent } from './data/content.js';
 import Topbar from './components/Topbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
@@ -101,7 +101,6 @@ export default function App() {
   const contentId = selection.kind === 'body' ? selection.mode : selection.organId;
   const content = getContent(contentId);
   const glb = resolveSelectionGlb(selection);
-  const fallbackColor = FALLBACK_COLORS[contentId];
   const isBody = selection.kind === 'body';
 
   const stageHeading = useMemo(() => {
@@ -125,7 +124,6 @@ export default function App() {
             selection={selection}
             glb={glb}
             isBody={isBody}
-            fallbackColor={fallbackColor}
             heading={stageHeading}
             onSelectHotspot={selectHotspot}
             onDisplayMode={selectDisplayMode}

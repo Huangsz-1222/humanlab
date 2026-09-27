@@ -66,50 +66,6 @@ function useModelLoader(glb, isBody) {
   return state;
 }
 
-function Humanoid({ color }) {
-  const mat = { color, roughness: 0.65 };
-  return (
-    <group>
-      <mesh position={[0, 0.74, 0]}>
-        <sphereGeometry args={[0.17, 32, 32]} />
-        <meshStandardMaterial {...mat} />
-      </mesh>
-      <mesh position={[0, 0.34, 0]}>
-        <capsuleGeometry args={[0.22, 0.5, 8, 24]} />
-        <meshStandardMaterial {...mat} />
-      </mesh>
-      <mesh position={[-0.28, 0.36, 0]} rotation={[0, 0, 0.25]}>
-        <capsuleGeometry args={[0.07, 0.5, 8, 16]} />
-        <meshStandardMaterial {...mat} />
-      </mesh>
-      <mesh position={[0.28, 0.36, 0]} rotation={[0, 0, -0.25]}>
-        <capsuleGeometry args={[0.07, 0.5, 8, 16]} />
-        <meshStandardMaterial {...mat} />
-      </mesh>
-      <mesh position={[-0.12, -0.12, 0]}>
-        <capsuleGeometry args={[0.09, 0.55, 8, 16]} />
-        <meshStandardMaterial {...mat} />
-      </mesh>
-      <mesh position={[0.12, -0.12, 0]}>
-        <capsuleGeometry args={[0.09, 0.55, 8, 16]} />
-        <meshStandardMaterial {...mat} />
-      </mesh>
-    </group>
-  );
-}
-
-function Placeholder({ isBody, color }) {
-  if (!isBody) {
-    return (
-      <mesh>
-        <sphereGeometry args={[0.55, 48, 48]} />
-        <meshStandardMaterial color={color} roughness={0.5} />
-      </mesh>
-    );
-  }
-  return <Humanoid color={color} />;
-}
-
 function Hotspot({ position, label, onSelect }) {
   const [hovered, setHovered] = useState(false);
   useCursor(hovered);
@@ -163,7 +119,7 @@ function Hotspots({ positions, onSelect }) {
   );
 }
 
-function ModelScene({ glb, isBody, fallbackColor, onSelectHotspot, onStatus }) {
+function ModelScene({ glb, isBody, onSelectHotspot, onStatus }) {
   const { scene, status, progress, hotspotPositions } = useModelLoader(glb, isBody);
 
   useEffect(() => {
@@ -172,11 +128,7 @@ function ModelScene({ glb, isBody, fallbackColor, onSelectHotspot, onStatus }) {
 
   return (
     <group>
-      {status === 'loaded' && scene ? (
-        <primitive object={scene} />
-      ) : (
-        <Placeholder isBody={isBody} color={fallbackColor} />
-      )}
+      {status === 'loaded' && scene && <primitive object={scene} />}
       {isBody && <Hotspots positions={hotspotPositions} onSelect={onSelectHotspot} />}
     </group>
   );
@@ -200,7 +152,6 @@ function CameraReset({ glb, resetSignal }) {
 export default function Viewer({
   glb,
   isBody,
-  fallbackColor,
   autoRotate,
   resetSignal,
   onSelectHotspot,
@@ -218,7 +169,6 @@ export default function Viewer({
         key={glb || 'placeholder'}
         glb={glb}
         isBody={isBody}
-        fallbackColor={fallbackColor}
         onSelectHotspot={onSelectHotspot}
         onStatus={onStatus}
       />

@@ -67,19 +67,6 @@ export const CATALOG = [
   { id: 'small_intestine_wall', category: 'organs', kind: 'organ', organId: 'small_intestine', smallIntestineView: 'wall' },
 ];
 
-// 占位模型的顏色（模型尚未匯入時使用）
-export const FALLBACK_COLORS = {
-  surface: '#e8b48a',
-  skeleton: '#e6dcc8',
-  skeleton_muscles: '#d98a76',
-  heart: '#c46b7a',
-  lung: '#d988a0',
-  stomach: '#c98a3a',
-  brain: '#6f3aa3',
-  neck: '#5b8db8',
-  small_intestine: '#c98a3a',
-};
-
 // 依 catalog item 取得 GLB 路徑（可能為 undefined = 尚未匯入）
 export function resolveGlb(item) {
   if (item.kind === 'body') return BODY_GLB[item.mode];
