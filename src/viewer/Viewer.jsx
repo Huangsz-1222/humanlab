@@ -119,7 +119,7 @@ function Hotspots({ positions, onSelect }) {
   );
 }
 
-function ModelScene({ glb, isBody, onSelectHotspot, onStatus }) {
+function ModelScene({ glb, isBody, showHotspots, onSelectHotspot, onStatus }) {
   const { scene, status, progress, hotspotPositions } = useModelLoader(glb, isBody);
 
   useEffect(() => {
@@ -129,7 +129,7 @@ function ModelScene({ glb, isBody, onSelectHotspot, onStatus }) {
   return (
     <group>
       {status === 'loaded' && scene && <primitive object={scene} />}
-      {isBody && <Hotspots positions={hotspotPositions} onSelect={onSelectHotspot} />}
+      {showHotspots && <Hotspots positions={hotspotPositions} onSelect={onSelectHotspot} />}
     </group>
   );
 }
@@ -152,6 +152,7 @@ function CameraReset({ glb, resetSignal }) {
 export default function Viewer({
   glb,
   isBody,
+  showHotspots,
   autoRotate,
   resetSignal,
   onSelectHotspot,
@@ -169,6 +170,7 @@ export default function Viewer({
         key={glb || 'placeholder'}
         glb={glb}
         isBody={isBody}
+        showHotspots={showHotspots}
         onSelectHotspot={onSelectHotspot}
         onStatus={onStatus}
       />

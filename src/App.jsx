@@ -102,6 +102,7 @@ export default function App() {
   const content = getContent(contentId);
   const glb = resolveSelectionGlb(selection);
   const isBody = selection.kind === 'body';
+  const showHotspots = selection.kind === 'body' && selection.mode === 'surface';
 
   const stageHeading = useMemo(() => {
     if (selection.kind === 'body') {
@@ -124,6 +125,7 @@ export default function App() {
             selection={selection}
             glb={glb}
             isBody={isBody}
+            showHotspots={showHotspots}
             heading={stageHeading}
             onSelectHotspot={selectHotspot}
             onDisplayMode={selectDisplayMode}

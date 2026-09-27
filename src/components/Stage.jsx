@@ -24,6 +24,7 @@ export default function Stage({
   selection,
   glb,
   isBody,
+  showHotspots,
   heading,
   onSelectHotspot,
   onDisplayMode,
@@ -44,6 +45,7 @@ export default function Stage({
         <Viewer
           glb={glb}
           isBody={isBody}
+          showHotspots={showHotspots}
           autoRotate={autoRotate}
           resetSignal={resetSignal}
           onSelectHotspot={onSelectHotspot}
