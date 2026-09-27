@@ -90,8 +90,13 @@ GitHub Actions 會自動建置並部署（約 1～2 分鐘）。
 2. 減面：`Decimate` 修改器 → Ratio 0.3～0.5 → Apply
 3. 縮貼圖：Image Editor → Image → Resize → 2048
 4. 匯出 GLB：`File → Export → glTF 2.0 (.glb)`，檔名用英文小寫＋底線
-5. 放到 `public/models/`
-6. 在 `src/data/models.js` 與 `src/data/content.js` 加入對應項目
-7. 執行「更新網站」
+5. **壓縮模型**（Draco + WebP）：
+   ```bash
+   npx gltf-transform optimize 輸入.glb 輸出.glb --compress draco --texture-compress webp --texture-size 1024
+   ```
+   > 身體（body_surface）因為有熱點空節點，改用個別指令 `resize → webp → draco`，避免熱點被移除。
+6. 放到 `public/models/`
+7. 在 `src/data/models.js` 與 `src/data/content.js` 加入對應項目
+8. 執行「更新網站」
 
 詳細匯出教學見 [`docs/BLENDER_EXPORT.md`](docs/BLENDER_EXPORT.md)。
