@@ -86,7 +86,7 @@ export default function App() {
     if (organId === 'brain') {
       const absDeg = ((Math.abs(azimuth) % Math.PI) / Math.PI) * 180;
       const frontish = absDeg <= 45 || absDeg >= 135;
-      const brainSide = !frontish && azimuth > 0 ? 'right' : 'left';
+      const brainSide = !frontish && azimuth > 0 ? 'left' : 'right';
       setSelection({
         kind: 'organ',
         mode: 'surface',
