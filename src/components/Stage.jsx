@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLang, UI } from '../i18n.jsx';
-import { DISPLAY_MODES, BRAIN_VIEWS, SMALL_INTESTINE_VIEWS } from '../data/models.js';
+import { DISPLAY_MODES, BRAIN_VIEWS, SMALL_INTESTINE_VIEWS, KIDNEY_SIDES } from '../data/models.js';
 import Viewer from '../viewer/Viewer.jsx';
 import { RotateIcon, ResetIcon } from './Icons.jsx';
 
@@ -20,16 +20,23 @@ const SMALL_INTESTINE_VIEW_LABELS = {
   wall: UI.viewWall,
 };
 
+const KIDNEY_SIDE_LABELS = {
+  left: UI.viewKidneyLeft,
+  right: UI.viewKidneyRight,
+};
+
 export default function Stage({
   selection,
   glb,
   isBody,
   showHotspots,
+  mirrored,
   heading,
   onSelectHotspot,
   onDisplayMode,
   onBrainView,
   onSmallIntestineView,
+  onKidneySide,
   onBack,
 }) {
   const { t } = useLang();
@@ -46,6 +53,7 @@ export default function Stage({
           glb={glb}
           isBody={isBody}
           showHotspots={showHotspots}
+          mirrored={mirrored}
           autoRotate={autoRotate}
           resetSignal={resetSignal}
           onSelectHotspot={onSelectHotspot}
@@ -116,6 +124,23 @@ export default function Stage({
                 onClick={() => onSmallIntestineView(v.id)}
               >
                 {t(SMALL_INTESTINE_VIEW_LABELS[v.id])}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {selection.organId === 'kidney' && (
+        <div className="display-switch">
+          <span className="switch-label">{t(UI.kidneyView)}</span>
+          <div className="switch-group">
+            {KIDNEY_SIDES.map((v) => (
+              <button
+                key={v.id}
+                className={`switch-btn ${selection.kidneySide === v.id ? 'active' : ''}`}
+                onClick={() => onKidneySide(v.id)}
+              >
+                {t(KIDNEY_SIDE_LABELS[v.id])}
               </button>
             ))}
           </div>

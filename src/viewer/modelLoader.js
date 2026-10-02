@@ -1,4 +1,4 @@
-import { Box3, Vector3 } from 'three';
+import { Box3, Vector3, DoubleSide } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { BODY_GLB, ORGAN_GLB } from '../data/models.js';
@@ -55,7 +55,8 @@ function fixMaterials(scene) {
     mats.forEach((m) => {
       if (m.metalness !== undefined && m.metalness > 0.5) m.metalness = 0;
       if (m.roughness !== undefined && m.roughness < 0.4) m.roughness = 0.6;
-      if (m.metalness !== undefined || m.roughness !== undefined) m.needsUpdate = true;
+      if (m.side !== undefined) m.side = DoubleSide;
+      if (m.metalness !== undefined || m.roughness !== undefined || m.side !== undefined) m.needsUpdate = true;
     });
   });
 }

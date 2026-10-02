@@ -45,13 +45,17 @@ export default function Sidebar({ selection, isActive, onSelect }) {
                       {item.brainView === 'coronal' && ` · ${t({ en: 'Coronal', zh: '冠狀' })}`}
                       {item.smallIntestineView === 'mucosa' && ` · ${t({ en: 'Mucosa & Villi', zh: '黏膜與絨毛' })}`}
                       {item.smallIntestineView === 'wall' && ` · ${t({ en: 'Wall', zh: '管壁' })}`}
+                      {item.kidneySide === 'left' && ` · ${t({ en: 'Left', zh: '左' })}`}
+                      {item.kidneySide === 'right' && ` · ${t({ en: 'Right', zh: '右' })}`}
                     </span>
                     <span className="cell-sub">
                       {item.brainView === 'sagittal' && t({ en: 'Side cross-section', zh: '側面剖面' })}
                       {item.brainView === 'coronal' && t({ en: 'Front cross-section', zh: '正面剖面' })}
                       {item.smallIntestineView === 'mucosa' && t({ en: 'Inner lining & villi', zh: '內襯與絨毛' })}
                       {item.smallIntestineView === 'wall' && t({ en: 'Intestinal wall', zh: '腸壁結構' })}
-                      {!item.brainView && !item.smallIntestineView && t(info.sub)}
+                      {item.kidneySide === 'left' && t({ en: 'Left kidney', zh: '左腎' })}
+                      {item.kidneySide === 'right' && t({ en: 'Right kidney', zh: '右腎' })}
+                      {!item.brainView && !item.smallIntestineView && !item.kidneySide && t(info.sub)}
                     </span>
                     <span className="cell-status">
                       <span className={`status-chip ${chipClass}`}>

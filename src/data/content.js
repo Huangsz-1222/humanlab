@@ -236,6 +236,35 @@ export const CONTENT = {
     ],
   },
 
+  kidney: {
+    id: 'kidney',
+    name: { en: 'Kidneys', zh: '腎臟' },
+    sub: { en: 'Urinary · Filtration', zh: '泌尿系統 · 過濾' },
+    tagline: { en: 'The body’s filter', zh: '身體的濾網' },
+    focus: { en: 'The organs that filter blood and make urine', zh: '過濾血液並製造尿液的器官' },
+    concept: {
+      en: 'The kidneys are a pair of bean-shaped organs that filter the blood, removing waste and extra water to make urine. Every day they filter about 180 litres of blood, yet produce only around 1.5 litres of urine — the rest is reabsorbed. Each kidney contains about one million tiny filtering units called nephrons.',
+      zh: '腎臟是一對豆形的器官，負責過濾血液、清除廢物與多餘水分以製造尿液。每天它們約過濾 180 公升的血液，卻只產生約 1.5 公升的尿液——其餘都會被回收。每個腎臟約有 100 萬個微小的過濾單位，稱為腎元。',
+    },
+    structures: [
+      { name: { en: 'Renal cortex', zh: '腎皮質' }, detail: { en: 'Outer layer containing nephrons', zh: '外層，含腎元' } },
+      { name: { en: 'Renal medulla', zh: '腎髓質' }, detail: { en: 'Inner region forming urine', zh: '內層，形成尿液' } },
+      { name: { en: 'Nephron', zh: '腎元' }, detail: { en: 'The functional filtering unit', zh: '負責過濾的功能單位' } },
+      { name: { en: 'Renal pelvis', zh: '腎盂' }, detail: { en: 'Collects urine before the ureter', zh: '收集尿液送往輸尿管' } },
+      { name: { en: 'Ureter', zh: '輸尿管' }, detail: { en: 'Tube carrying urine to the bladder', zh: '將尿液送往膀胱的管道' } },
+    ],
+    funFact: {
+      en: 'Your kidneys filter all your blood about 60 times every single day.',
+      zh: '你的腎臟每天會把你全身的血液過濾大約 60 次。',
+    },
+    meta: [
+      { label: { en: 'Type', zh: '類型' }, value: { en: 'Organ', zh: '器官' } },
+      { label: { en: 'Location', zh: '位置' }, value: { en: 'Upper back abdomen, either side of spine', zh: '後上腹部、脊柱兩側' } },
+      { label: SRC_LABEL, value: SRC },
+      { label: { en: 'Status', zh: '狀態' }, value: { en: 'Interactive', zh: '可互動' } },
+    ],
+  },
+
   small_intestine: {
     id: 'small_intestine',
     name: { en: 'Small Intestine', zh: '小腸' },

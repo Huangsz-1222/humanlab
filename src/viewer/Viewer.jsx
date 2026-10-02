@@ -110,7 +110,7 @@ function Hotspots({ positions, onSelect }) {
             label={hs.label}
             onSelect={() => {
               const azimuth = Math.atan2(camera.position.x, camera.position.z);
-              onSelect(hs.organId, azimuth);
+              onSelect(hs.organId, azimuth, hs.kidneySide);
             }}
           />
         );
@@ -119,7 +119,7 @@ function Hotspots({ positions, onSelect }) {
   );
 }
 
-function ModelScene({ glb, isBody, showHotspots, onSelectHotspot, onStatus }) {
+function ModelScene({ glb, isBody, showHotspots, mirrored, onSelectHotspot, onStatus }) {
   const { scene, status, progress, hotspotPositions } = useModelLoader(glb, isBody);
 
   useEffect(() => {
@@ -128,7 +128,11 @@ function ModelScene({ glb, isBody, showHotspots, onSelectHotspot, onStatus }) {
 
   return (
     <group>
-      {status === 'loaded' && scene && <primitive object={scene} />}
+      {status === 'loaded' && scene && (
+        <group scale={mirrored ? [-1, 1, 1] : [1, 1, 1]}>
+          <primitive object={scene} />
+        </group>
+      )}
       {showHotspots && <Hotspots positions={hotspotPositions} onSelect={onSelectHotspot} />}
     </group>
   );
@@ -153,6 +157,7 @@ export default function Viewer({
   glb,
   isBody,
   showHotspots,
+  mirrored,
   autoRotate,
   resetSignal,
   onSelectHotspot,
@@ -171,6 +176,7 @@ export default function Viewer({
         glb={glb}
         isBody={isBody}
         showHotspots={showHotspots}
+        mirrored={mirrored}
         onSelectHotspot={onSelectHotspot}
         onStatus={onStatus}
       />
