@@ -24,6 +24,7 @@ export default function App() {
     mode: 'surface',
     organId: null,
     brainView: 'sagittal',
+    brainSide: 'left',
     smallIntestineView: 'mucosa',
     kidneySide: 'left',
   });
@@ -43,13 +44,14 @@ export default function App() {
 
   const selectItem = useCallback((item) => {
     if (item.kind === 'body') {
-      setSelection({ kind: 'body', mode: item.mode, organId: null, brainView: 'sagittal', smallIntestineView: 'mucosa', kidneySide: 'left' });
+      setSelection({ kind: 'body', mode: item.mode, organId: null, brainView: 'sagittal', brainSide: 'left', smallIntestineView: 'mucosa', kidneySide: 'left' });
     } else {
       setSelection({
         kind: 'organ',
         mode: 'surface',
         organId: item.organId,
         brainView: item.brainView || 'sagittal',
+        brainSide: 'left',
         smallIntestineView: item.smallIntestineView || 'mucosa',
         kidneySide: item.kidneySide || 'left',
       });
@@ -57,39 +59,45 @@ export default function App() {
   }, []);
 
   const selectDisplayMode = useCallback((mode) => {
-    setSelection({ kind: 'body', mode, organId: null, brainView: 'sagittal', smallIntestineView: 'mucosa', kidneySide: 'left' });
+    setSelection({ kind: 'body', mode, organId: null, brainView: 'sagittal', brainSide: 'left', smallIntestineView: 'mucosa', kidneySide: 'left' });
   }, []);
 
   const selectBrainView = useCallback((brainView) => {
-    setSelection({ kind: 'organ', mode: 'surface', organId: 'brain', brainView, smallIntestineView: 'mucosa', kidneySide: 'left' });
+    setSelection({ kind: 'organ', mode: 'surface', organId: 'brain', brainView, brainSide: 'left', smallIntestineView: 'mucosa', kidneySide: 'left' });
+  }, []);
+
+  const selectBrainSide = useCallback((brainSide) => {
+    setSelection({ kind: 'organ', mode: 'surface', organId: 'brain', brainView: 'sagittal', brainSide, smallIntestineView: 'mucosa', kidneySide: 'left' });
   }, []);
 
   const selectSmallIntestineView = useCallback((smallIntestineView) => {
-    setSelection({ kind: 'organ', mode: 'surface', organId: 'small_intestine', brainView: 'sagittal', smallIntestineView, kidneySide: 'left' });
+    setSelection({ kind: 'organ', mode: 'surface', organId: 'small_intestine', brainView: 'sagittal', brainSide: 'left', smallIntestineView, kidneySide: 'left' });
   }, []);
 
   const selectKidneySide = useCallback((kidneySide) => {
-    setSelection({ kind: 'organ', mode: 'surface', organId: 'kidney', brainView: 'sagittal', smallIntestineView: 'mucosa', kidneySide });
+    setSelection({ kind: 'organ', mode: 'surface', organId: 'kidney', brainView: 'sagittal', brainSide: 'left', smallIntestineView: 'mucosa', kidneySide });
   }, []);
 
   const backToBody = useCallback(() => {
-    setSelection({ kind: 'body', mode: 'surface', organId: null, brainView: 'sagittal', smallIntestineView: 'mucosa', kidneySide: 'left' });
+    setSelection({ kind: 'body', mode: 'surface', organId: null, brainView: 'sagittal', brainSide: 'left', smallIntestineView: 'mucosa', kidneySide: 'left' });
   }, []);
 
   const selectHotspot = useCallback((organId, azimuth, kidneySide) => {
     if (organId === 'brain') {
-      const a = ((Math.abs(azimuth) % Math.PI) / Math.PI) * 180;
-      const frontish = a <= 45 || a >= 135;
+      const absDeg = ((Math.abs(azimuth) % Math.PI) / Math.PI) * 180;
+      const frontish = absDeg <= 45 || absDeg >= 135;
+      const brainSide = !frontish && azimuth > 0 ? 'right' : 'left';
       setSelection({
         kind: 'organ',
         mode: 'surface',
         organId: 'brain',
-        brainView: frontish ? 'sagittal' : 'coronal',
+        brainView: frontish ? 'coronal' : 'sagittal',
+        brainSide,
         smallIntestineView: 'mucosa',
         kidneySide: 'left',
       });
     } else {
-      setSelection({ kind: 'organ', mode: 'surface', organId, brainView: 'sagittal', smallIntestineView: 'mucosa', kidneySide: kidneySide || 'left' });
+      setSelection({ kind: 'organ', mode: 'surface', organId, brainView: 'sagittal', brainSide: 'left', smallIntestineView: 'mucosa', kidneySide: kidneySide || 'left' });
     }
   }, []);
 
@@ -111,7 +119,9 @@ export default function App() {
   const glb = resolveSelectionGlb(selection);
   const isBody = selection.kind === 'body';
   const showHotspots = selection.kind === 'body' && selection.mode === 'surface';
-  const mirrored = selection.kind === 'organ' && selection.organId === 'kidney' && selection.kidneySide === 'right';
+  const mirrored =
+    (selection.kind === 'organ' && selection.organId === 'kidney' && selection.kidneySide === 'right') ||
+    (selection.kind === 'organ' && selection.organId === 'brain' && selection.brainView === 'sagittal' && selection.brainSide === 'right');
 
   const stageHeading = useMemo(() => {
     if (selection.kind === 'body') {
@@ -140,6 +150,7 @@ export default function App() {
             onSelectHotspot={selectHotspot}
             onDisplayMode={selectDisplayMode}
             onBrainView={selectBrainView}
+            onBrainSide={selectBrainSide}
             onSmallIntestineView={selectSmallIntestineView}
             onKidneySide={selectKidneySide}
             onBack={backToBody}

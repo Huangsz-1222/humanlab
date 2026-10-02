@@ -39,6 +39,9 @@ export const SMALL_INTESTINE_VIEWS = [{ id: 'mucosa' }, { id: 'wall' }];
 // 腎臟左右（同一模型鏡像）
 export const KIDNEY_SIDES = [{ id: 'left' }, { id: 'right' }];
 
+// 腦部左右（冠狀切面鏡像）
+export const BRAIN_SIDES = [{ id: 'left' }, { id: 'right' }];
+
 // 主畫面人體上的熱點（對應 Blender 裡的 hotspot_* 標記）
 // position 是「占位模型」時使用的近似位置（人體本地座標，Y 軸向上）
 export const HOTSPOTS = [

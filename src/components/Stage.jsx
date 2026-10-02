@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLang, UI } from '../i18n.jsx';
-import { DISPLAY_MODES, BRAIN_VIEWS, SMALL_INTESTINE_VIEWS, KIDNEY_SIDES } from '../data/models.js';
+import { DISPLAY_MODES, BRAIN_VIEWS, SMALL_INTESTINE_VIEWS, KIDNEY_SIDES, BRAIN_SIDES } from '../data/models.js';
 import Viewer from '../viewer/Viewer.jsx';
 import { RotateIcon, ResetIcon } from './Icons.jsx';
 
@@ -20,9 +20,9 @@ const SMALL_INTESTINE_VIEW_LABELS = {
   wall: UI.viewWall,
 };
 
-const KIDNEY_SIDE_LABELS = {
-  left: UI.viewKidneyLeft,
-  right: UI.viewKidneyRight,
+const SIDE_LABELS = {
+  left: UI.viewLeft,
+  right: UI.viewRight,
 };
 
 export default function Stage({
@@ -35,6 +35,7 @@ export default function Stage({
   onSelectHotspot,
   onDisplayMode,
   onBrainView,
+  onBrainSide,
   onSmallIntestineView,
   onKidneySide,
   onBack,
@@ -110,6 +111,22 @@ export default function Stage({
               </button>
             ))}
           </div>
+          {selection.brainView === 'sagittal' && (
+            <>
+              <span className="switch-label">{t(UI.sideView)}</span>
+              <div className="switch-group">
+                {BRAIN_SIDES.map((v) => (
+                  <button
+                    key={v.id}
+                    className={`switch-btn ${selection.brainSide === v.id ? 'active' : ''}`}
+                    onClick={() => onBrainSide(v.id)}
+                  >
+                    {t(SIDE_LABELS[v.id])}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       )}
 
@@ -132,7 +149,7 @@ export default function Stage({
 
       {selection.organId === 'kidney' && (
         <div className="display-switch">
-          <span className="switch-label">{t(UI.kidneyView)}</span>
+          <span className="switch-label">{t(UI.sideView)}</span>
           <div className="switch-group">
             {KIDNEY_SIDES.map((v) => (
               <button
@@ -140,7 +157,7 @@ export default function Stage({
                 className={`switch-btn ${selection.kidneySide === v.id ? 'active' : ''}`}
                 onClick={() => onKidneySide(v.id)}
               >
-                {t(KIDNEY_SIDE_LABELS[v.id])}
+                {t(SIDE_LABELS[v.id])}
               </button>
             ))}
           </div>
