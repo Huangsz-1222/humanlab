@@ -1,5 +1,6 @@
 import { useLang, UI } from '../i18n.jsx';
 import { CATALOG } from '../data/models.js';
+import { VERSION } from '../version.js';
 import { InfoIcon } from './Icons.jsx';
 
 export default function Topbar({ onAbout }) {
@@ -25,8 +26,8 @@ export default function Topbar({ onAbout }) {
         <span className="meta-pill">
           {lang === 'en' ? `${count} Models` : `${count} 個模型`}
         </span>
-        <span className="meta-pill version-pill" title="Build version">
-          v {__APP_VERSION__}
+        <span className="meta-pill version-pill" title="Version">
+          v{VERSION}
         </span>
         <button className="meta-pill about-btn" onClick={onAbout}>
           <InfoIcon />
