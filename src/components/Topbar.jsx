@@ -25,6 +25,9 @@ export default function Topbar({ onAbout }) {
         <span className="meta-pill">
           {lang === 'en' ? `${count} Models` : `${count} 個模型`}
         </span>
+        <span className="meta-pill version-pill" title="Build version">
+          v {__APP_VERSION__}
+        </span>
         <button className="meta-pill about-btn" onClick={onAbout}>
           <InfoIcon />
           {t({ en: 'About', zh: '關於' })}
