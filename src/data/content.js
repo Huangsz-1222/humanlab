@@ -236,6 +236,93 @@ export const CONTENT = {
     ],
   },
 
+  liver: {
+    id: 'liver',
+    name: { en: 'Liver', zh: '肝臟' },
+    sub: { en: 'Digestive · Metabolism', zh: '消化系統 · 代謝' },
+    tagline: { en: 'The chemical factory', zh: '身體的化工廠' },
+    focus: { en: 'The largest internal organ', zh: '最大的內臟器官' },
+    concept: {
+      en: 'The liver is the body’s largest internal organ, weighing about 1.5 kilograms. It filters blood, produces bile for digesting fat, stores nutrients, and breaks down toxins and medicines. Remarkably, it is the only internal organ that can regenerate itself.',
+      zh: '肝臟是人體最大的內臟器官，重約 1.5 公斤。它過濾血液、製造幫助消化脂肪的膽汁、儲存養分，並分解毒素與藥物。它是唯一能再生的內臟器官。',
+    },
+    structures: [
+      { name: { en: 'Hepatocytes', zh: '肝細胞' }, detail: { en: 'Main liver cells that do the work', zh: '負責主要功能的肝臟細胞' } },
+      { name: { en: 'Bile ducts', zh: '膽管' }, detail: { en: 'Carry bile to the gallbladder', zh: '將膽汁送往膽囊' } },
+      { name: { en: 'Portal vein', zh: '門靜脈' }, detail: { en: 'Brings nutrient-rich blood', zh: '帶來富含養分的血液' } },
+      { name: { en: 'Hepatic artery', zh: '肝動脈' }, detail: { en: 'Supplies oxygenated blood', zh: '供應含氧血液' } },
+      { name: { en: 'Lobes', zh: '肝葉' }, detail: { en: 'Sections of the liver', zh: '肝臟的分葉' } },
+    ],
+    funFact: {
+      en: 'The liver can regenerate — even if two-thirds is removed, it can grow back.',
+      zh: '肝臟可以再生——即使切除了三分之二，它仍能長回來。',
+    },
+    meta: [
+      { label: { en: 'Type', zh: '類型' }, value: { en: 'Organ', zh: '器官' } },
+      { label: { en: 'Location', zh: '位置' }, value: { en: 'Upper right abdomen', zh: '右上腹' } },
+      { label: SRC_LABEL, value: SRC },
+      { label: { en: 'Status', zh: '狀態' }, value: { en: 'Interactive', zh: '可互動' } },
+    ],
+  },
+
+  pancreas: {
+    id: 'pancreas',
+    name: { en: 'Pancreas', zh: '胰臟' },
+    sub: { en: 'Digestive · Endocrine', zh: '消化系統 · 內分泌' },
+    tagline: { en: 'The dual-purpose gland', zh: '雙重功能的腺體' },
+    focus: { en: 'Produces enzymes and hormones', zh: '產生酵素與激素' },
+    concept: {
+      en: 'The pancreas is a leaf-shaped gland behind the stomach that plays two roles. It releases digestive enzymes into the small intestine to break down food, and it produces hormones such as insulin and glucagon that control blood sugar.',
+      zh: '胰臟是位於胃後方、葉狀的腺體，扮演兩種角色。它把消化酵素釋放到小腸以分解食物，並製造胰島素與升糖素等激素來調控血糖。',
+    },
+    structures: [
+      { name: { en: 'Islets of Langerhans', zh: '胰島' }, detail: { en: 'Produce insulin and glucagon', zh: '製造胰島素與升糖素' } },
+      { name: { en: 'Acinar cells', zh: '腺泡細胞' }, detail: { en: 'Secrete digestive enzymes', zh: '分泌消化酵素' } },
+      { name: { en: 'Pancreatic duct', zh: '胰管' }, detail: { en: 'Carries enzymes to the intestine', zh: '將酵素送往腸道' } },
+      { name: { en: 'Head', zh: '胰頭' }, detail: { en: 'Nestles in the duodenum', zh: '嵌在十二指腸旁' } },
+      { name: { en: 'Tail', zh: '胰尾' }, detail: { en: 'Extends toward the spleen', zh: '延伸向脾臟' } },
+    ],
+    funFact: {
+      en: 'The pancreas produces insulin — the hormone that lets your cells use sugar for energy.',
+      zh: '胰臟製造胰島素——這種激素讓你的細胞能利用糖分產生能量。',
+    },
+    meta: [
+      { label: { en: 'Type', zh: '類型' }, value: { en: 'Gland', zh: '腺體' } },
+      { label: { en: 'Location', zh: '位置' }, value: { en: 'Behind the stomach', zh: '胃的後方' } },
+      { label: SRC_LABEL, value: SRC },
+      { label: { en: 'Status', zh: '狀態' }, value: { en: 'Interactive', zh: '可互動' } },
+    ],
+  },
+
+  gallbladder: {
+    id: 'gallbladder',
+    name: { en: 'Gallbladder', zh: '膽囊' },
+    sub: { en: 'Digestive · Bile storage', zh: '消化系統 · 儲存膽汁' },
+    tagline: { en: 'The bile reservoir', zh: '膽汁儲存庫' },
+    focus: { en: 'Stores and concentrates bile', zh: '儲存並濃縮膽汁' },
+    concept: {
+      en: 'The gallbladder is a small pear-shaped pouch tucked under the liver. It stores and concentrates the bile produced by the liver, then releases it into the small intestine to help break down the fat in your food.',
+      zh: '膽囊是一個位於肝臟下方、梨形的小囊。它儲存並濃縮肝臟製造的膽汁，再把膽汁釋放到小腸，幫助分解食物中的脂肪。',
+    },
+    structures: [
+      { name: { en: 'Fundus', zh: '膽囊底' }, detail: { en: 'Rounded lower part', zh: '圓形的下方部位' } },
+      { name: { en: 'Body', zh: '膽囊體' }, detail: { en: 'Main storage region', zh: '主要的儲存區域' } },
+      { name: { en: 'Neck', zh: '膽囊頸' }, detail: { en: 'Narrows toward the duct', zh: '朝向膽囊管收窄' } },
+      { name: { en: 'Cystic duct', zh: '膽囊管' }, detail: { en: 'Connects to the bile duct', zh: '連接到總膽管' } },
+      { name: { en: 'Bile', zh: '膽汁' }, detail: { en: 'Helps digest fat', zh: '幫助消化脂肪' } },
+    ],
+    funFact: {
+      en: 'The gallbladder can store about 50 millilitres of concentrated bile.',
+      zh: '膽囊大約能儲存 50 毫升的濃縮膽汁。',
+    },
+    meta: [
+      { label: { en: 'Type', zh: '類型' }, value: { en: 'Organ', zh: '器官' } },
+      { label: { en: 'Location', zh: '位置' }, value: { en: 'Under the liver', zh: '肝臟下方' } },
+      { label: SRC_LABEL, value: SRC },
+      { label: { en: 'Status', zh: '狀態' }, value: { en: 'Interactive', zh: '可互動' } },
+    ],
+  },
+
   kidney: {
     id: 'kidney',
     name: { en: 'Kidneys', zh: '腎臟' },
